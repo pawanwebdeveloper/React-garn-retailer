@@ -1,0 +1,104 @@
+import React, { useState, useEffect } from 'react'
+
+import image from '../../assets/images/image 35.png'
+import iconBadge from '../../assets/icons/check-circle.png'
+import { Accordion } from 'react-bootstrap'
+import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
+import { useSelector, useDispatch } from 'react-redux'
+import { getData } from 'src/services/http.service'
+import Constants from 'src/services/constant'
+
+export default function ProductTypes() {
+  useEffect(() => {
+    getProductTypes()
+  }, [])
+
+  const dispatch = useDispatch()
+  const masterProducts = useSelector((state) => state.masterProducts)
+  const selectedProducts = useSelector((state) => state.selectedProducts)
+
+  const getProductTypes = () => {
+    getData(Constants.END_POINT.GET_WHOLESALERS_PRODUCTS, {
+      params: {
+        user_id: 73,
+        page: 1,
+        items_per_page: 12,
+        show_master_products_only: 1,
+        product_type: 'P',
+      },
+    })
+      .then((result) => {
+        console.log(result)
+        dispatch({
+          type: 'set',
+          masterProducts: result,
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  const renderproducts = () => {
+    return masterProducts.products.map((item, i) => (
+      <div key={i} className="col-md-2 col-12 mb-2">
+        <div
+          onClick={() => selectProduct(item.product_id, item)}
+          className={
+            selectedProducts?.[item.product_id] ? 'sel_card boxItem1 active' : 'sel_card boxItem1 '
+          }
+        >
+          <div className="pro_img">
+            <img src={item?.main_pair?.detailed?.https_image_path} alt="" width="37px" />
+            <img src={iconBadge} className="iconbadge" alt="" />
+            <div className="nuber_list">100</div>
+          </div>
+          <p className="heading5 text_medium text-center">{item?.product.slice(0, 12)}</p>
+        </div>
+      </div>
+    ))
+  }
+
+  const selectProduct = (id, item) => {
+    if (selectedProducts?.[id]) {
+      delete selectedProducts?.[id]
+      dispatch({
+        type: 'set',
+        selectedProducts: { ...selectedProducts },
+      })
+    } else {
+      dispatch({
+        type: 'set',
+        selectedProducts: { ...selectedProducts, [id]: item },
+      })
+    }
+  }
+
+  return (
+    <Accordion defaultActiveKey="0">
+      <Accordion.Item eventKey="1">
+        <Accordion.Header>
+          <p className="heading3 text_medium">Please Select Your Product Type</p>
+        </Accordion.Header>
+        <Accordion.Body>
+          <CCard className="mb-4 box_items">
+            <CCardBody>
+              <CRow>
+                <div className="row p-1 m-0 mb-2">
+                  {masterProducts?.products?.length && renderproducts()}
+                </div>
+                <div className="row m-0">
+                  <div className="col-md-4 col-12">
+                    <p className="text-dark">
+                      Total Items: <span className="text-secondary">11</span>
+                    </p>
+                  </div>
+                  <div className="col-md-8 col-12"></div>
+                </div>
+              </CRow>
+            </CCardBody>
+          </CCard>
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+  )
+}
