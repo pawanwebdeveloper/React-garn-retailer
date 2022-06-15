@@ -57,7 +57,6 @@ export default function ItemBreakDown() {
   }
 
   const removeItem = (index, p_id) => {
-    console.log(index, p_id)
     cart?.[p_id].items.splice(index, 1)
     if (cart?.[p_id].items?.length) {
       dispatch({
@@ -79,7 +78,7 @@ export default function ItemBreakDown() {
           <CCardBody>
             <CRow>
               <CCol xs={12}>
-                <p className="heading3 text_medium">ITEMS BREAKDOWN</p>
+                <p className="heading4 text_medium">ITEMS BREAKDOWN</p>
               </CCol>
               {Object.keys(cart)?.length && renderBreakDown()}
               <div className="check_ic">
@@ -94,6 +93,10 @@ export default function ItemBreakDown() {
               <div className="row m-0 justify-content-center">
                 <div className="large-btn w-75">TO CART</div>
               </div>
+              {/* <div className="paragraph1 text_medium mb-2 ">ITEMS BREAKDOWN</div>
+              <div>
+                <div className="paragraph3 text_bold">Bold Herringbone Chain Neclace - Orion</div>
+              </div> */}
             </CRow>
           </CCardBody>
         </CCard>

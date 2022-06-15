@@ -27,7 +27,6 @@ export default function Wholesalers() {
       },
     })
       .then((result) => {
-        console.log(result)
         dispatch({
           type: 'set',
           Wholesalers: result,

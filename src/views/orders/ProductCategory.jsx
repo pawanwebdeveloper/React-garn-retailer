@@ -13,12 +13,10 @@ export default function ProductCategory() {
 
   const dispatch = useDispatch()
   const categories = useSelector((state) => state.categories)
-
-  const [selected, setSelected] = useState(null)
+  const selected = useSelector((state) => state.selectedCategories)
   const getCategories = () => {
     getData(Constants.END_POINT.GET_CATEGORIES)
       .then((result) => {
-        console.log(result.categories)
         dispatch({
           type: 'set',
           categories: result.categories,
@@ -32,9 +30,15 @@ export default function ProductCategory() {
   const selectcategory = (cat_id) => {
     if (selected?.[cat_id]) {
       delete selected?.[cat_id]
-      setSelected({ ...selected })
+      dispatch({
+        type: 'set',
+        selectedCategories: { ...selected },
+      })
     } else {
-      setSelected({ ...selected, [cat_id]: { category_id: cat_id } })
+      dispatch({
+        type: 'set',
+        selectedCategories: { ...selected, [cat_id]: { category_id: cat_id } },
+      })
     }
   }
   const renderCategories = () => {

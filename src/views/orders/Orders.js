@@ -17,20 +17,37 @@ import Constants from 'src/services/constant'
 export default function Orders() {
   const dispatch = useDispatch()
   const allProducts = useSelector((state) => state.allProducts)
+
+  const selectedCategories = useSelector((state) => state.selectedCategories)
+  const selectedWholesalers = useSelector((state) => state.selectedWholesalers)
   const selectedProducts = useSelector((state) => state.selectedProducts)
+  const selectedFeatures = useSelector((state) => state.selectedFeatures)
+  console.log('selectedFeatures==>', selectedFeatures)
 
   const getProducts = () => {
+    let p = { user_id: 73, page: 1, items_per_page: 12, group_by_sellers_offers: 1 }
+    if (Object.keys(selectedWholesalers)?.length) {
+      p.company_ids = Object.keys(selectedWholesalers).toString()
+    }
+    if (Object.keys(selectedProducts)?.length) {
+      p.master_product_ids = Object.keys(selectedProducts).toString()
+    }
+
+    if (selectedFeatures?.length_feature && Object.keys(selectedFeatures?.length_feature)?.length) {
+      p.length_feature = Object.keys(selectedFeatures?.length_feature).toString()
+    }
+    if (selectedFeatures?.size_feature && Object.keys(selectedFeatures?.size_feature)?.length) {
+      p.size_feature = Object.keys(selectedFeatures?.size_feature).toString()
+    }
+    if (selectedFeatures?.weight_feature && Object.keys(selectedFeatures?.weight_feature)?.length) {
+      p.weight_feature = Object.keys(selectedFeatures?.weight_feature).toString()
+    }
+
+    console.log(p)
     getData(Constants.END_POINT.GET_WHOLESALERS_PRODUCTS, {
-      params: {
-        user_id: 73,
-        page: 1,
-        items_per_page: 12,
-        // company_ids: 1,
-        master_product_ids: '9213',
-      },
+      params: p,
     })
       .then((result) => {
-        console.log(result)
         dispatch({
           type: 'set',
           allProducts: result,

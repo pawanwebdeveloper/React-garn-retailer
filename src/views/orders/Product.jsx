@@ -14,7 +14,6 @@ export default function Product() {
   const [qty, setQty] = useState(200)
   const [product, setProduct] = useState({})
   const [selected, setSelected] = useState({})
-  console.log(selected)
 
   useEffect(() => {
     if (productId) {
@@ -28,7 +27,6 @@ export default function Product() {
       },
     })
       .then((result) => {
-        console.log(result)
         setProduct(result)
       })
       .catch((err) => {
@@ -103,8 +101,6 @@ export default function Product() {
     }
     setSelected({})
   }
-
-  console.log(cart)
   return (
     <div>
       {productId && (

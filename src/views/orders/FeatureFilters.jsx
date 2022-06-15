@@ -14,7 +14,6 @@ export default function FeatureFilters() {
   const dispatch = useDispatch()
   const features = useSelector((state) => state.features)
   const selectedFeatures = useSelector((state) => state.selectedFeatures)
-  console.log(selectedFeatures)
 
   const getFeatures = () => {
     getData(Constants.END_POINT.GET_FEATURES, {
@@ -23,7 +22,6 @@ export default function FeatureFilters() {
       },
     })
       .then((result) => {
-        console.log(result)
         dispatch({
           type: 'set',
           features: result,

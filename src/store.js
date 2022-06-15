@@ -56,6 +56,7 @@ const initialState = {
       },
     },
   ],
+  selectedCategories: {},
   Wholesalers: {
     vendors: [
       {

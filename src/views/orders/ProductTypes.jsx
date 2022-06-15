@@ -28,7 +28,6 @@ export default function ProductTypes() {
       },
     })
       .then((result) => {
-        console.log(result)
         dispatch({
           type: 'set',
           masterProducts: result,
