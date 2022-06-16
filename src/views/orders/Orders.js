@@ -42,8 +42,6 @@ export default function Orders() {
     if (selectedFeatures?.weight_feature && Object.keys(selectedFeatures?.weight_feature)?.length) {
       p.weight_feature = Object.keys(selectedFeatures?.weight_feature).toString()
     }
-
-    console.log(p)
     getData(Constants.END_POINT.GET_WHOLESALERS_PRODUCTS, {
       params: p,
     })

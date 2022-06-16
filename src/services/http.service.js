@@ -3,18 +3,20 @@ import Constants from './constant'
 import { isAuthenticated } from './auth'
 import { Buffer } from 'buffer'
 
-export const getData = (url, params) => {
+export const getData = (url, p) => {
   var username = 'wholesaler_app@ecarter.co'
   var password = '09i4u73157N5Jnl3f6C6t2XAKa5qFO31'
-  const encodedBase64Token = Buffer.from(`${username}:${password}`).toString('base64')
-  const authorization = `Basic ${encodedBase64Token}`
+  console.log(p)
   return axios
-    .get(Constants.BASE_URL + url.toString(), params, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
+    .get(
+      Constants.BASE_URL + url.toString(),
+      { params: p.params, auth: { username, password } },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    })
+    )
     .then((response) => {
       if (response.status === 401) {
         localStorage.removeItem('jwt')
@@ -33,15 +35,17 @@ export const getData = (url, params) => {
 export const postData = (url, body) => {
   var username = 'wholesaler_app@ecarter.co'
   var password = '09i4u73157N5Jnl3f6C6t2XAKa5qFO31'
-  const encodedBase64Token = Buffer.from(`${username}:${password}`).toString('base64')
-  const authorization = `Basic ${encodedBase64Token}`
   return axios
-    .post(Constants.BASE_URL + url.toString(), body, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
+    .post(
+      Constants.BASE_URL + url.toString(),
+      body,
+      { auth: { username, password } },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    })
+    )
     .then((response) => {
       console.log(response.data)
       return response.data
