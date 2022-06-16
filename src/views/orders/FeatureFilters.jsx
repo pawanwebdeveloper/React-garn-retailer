@@ -14,6 +14,7 @@ export default function FeatureFilters() {
   const dispatch = useDispatch()
   const features = useSelector((state) => state.features)
   const selectedFeatures = useSelector((state) => state.selectedFeatures)
+  console.log(features)
 
   const getFeatures = () => {
     getData(Constants.END_POINT.GET_FEATURES, {
@@ -35,9 +36,9 @@ export default function FeatureFilters() {
   const renderFeatures = () => {
     return features.map((item, i) => (
       <div key={i}>
-        <h6 className="text-dark">
+        <div className="paragraph2 text_bold">
           {item?.description} <span className="text-secondary">(gram)</span>
-        </h6>
+        </div>
         <div className="d-flex flex-wrap ">
           {item?.variants && renderVarients(item?.variants, item?.feature_code)}
         </div>
@@ -87,9 +88,9 @@ export default function FeatureFilters() {
       <CCardBody>
         <CRow>
           <CCol xs={12}>
-            <p className="heading3 text_medium">Size</p>
+            <div className="paragraph1 text_bold mb-2">Size</div>
           </CCol>
-          {renderFeatures()}
+          {features?.length && renderFeatures()}
         </CRow>
       </CCardBody>
     </CCard>

@@ -77,7 +77,9 @@ export default function Wholesalers() {
           <CCard className="mb-4 box_items">
             <CCardBody>
               <CRow>
-                <div className="row p-1 m-0 mb-2">{AllWholesalers && renderWholesalers()}</div>
+                <div className="row p-1 m-0 mb-2">
+                  {AllWholesalers?.vendors?.length && renderWholesalers()}
+                </div>
                 <div className="row m-0">
                   <div className="col-md-4 col-12">
                     <p className="text-dark">
@@ -91,7 +93,7 @@ export default function Wholesalers() {
                       <span className="text-secondary">{AllWholesalers?.params?.total_items}</span>
                     </p>
                   </div>
-                  <div className="col-md-8 col-12">
+                  {/* <div className="col-md-8 col-12">
                     <div className="pagination d-flex">
                       <ul className="pagination pagination-lg">
                         <li className="page-item disabled">
@@ -117,7 +119,7 @@ export default function Wholesalers() {
                         </li>
                       </ul>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </CRow>
             </CCardBody>

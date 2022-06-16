@@ -66,7 +66,7 @@ export default function Products() {
 
   return (
     <div>
-      {allProducts?.products?.length && (
+      {allProducts?.products?.length ? (
         <CCard className="mb-4 box_items">
           <CCardBody>
             <CRow>
@@ -128,7 +128,7 @@ export default function Products() {
             </CRow>
           </CCardBody>
         </CCard>
-      )}
+      ) : null}
     </div>
   )
 }

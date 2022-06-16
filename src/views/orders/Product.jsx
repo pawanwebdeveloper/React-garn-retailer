@@ -20,6 +20,7 @@ export default function Product() {
       getProduct()
     }
   }, [productId])
+
   const getProduct = () => {
     getData(Constants.END_POINT.GET_WHOLESALERS_PRODUCTS + `/${productId}`, {
       params: {
@@ -36,13 +37,17 @@ export default function Product() {
   const renderFeatures = (features) => {
     return Object.keys(features).map((f_id, i) => (
       <div key={i}>
-        <h6 className="text-dark text-uppercase">
-          {features?.[f_id]?.description} AVAILABILITY{' '}
-          <span className="text-secondary">(gram)</span>
-        </h6>
-        <div className="d-flex flex-wrap">
-          {features?.[f_id]?.variants && renderVarients(features?.[f_id]?.variants, f_id)}
-        </div>
+        {Object.keys(features?.[f_id]?.variants)?.length ? (
+          <div>
+            <h6 className="text-dark text-uppercase">
+              {features?.[f_id]?.description} AVAILABILITY{' '}
+              <span className="text-secondary">(gram)</span>
+            </h6>
+            <div className="d-flex flex-wrap">
+              {features?.[f_id]?.variants && renderVarients(features?.[f_id]?.variants, f_id)}
+            </div>
+          </div>
+        ) : null}
       </div>
     ))
   }
@@ -73,33 +78,35 @@ export default function Product() {
       </div>
     ))
   }
-
   const select = (f_id, v, item) => {
     setSelected({ ...selected, [f_id]: { [v]: item } })
   }
-
   const addProductInCart = () => {
-    let productArray = []
-    selected.qty = qty
-    if (cart?.[productId]) {
-      cart?.[productId]?.items.push(selected)
-      dispatch({
-        type: 'set',
-        cart: {
-          ...cart,
-        },
-      })
+    if (Object.keys(selected)?.length && qty > 0) {
+      let productArray = []
+      selected.qty = qty
+      if (cart?.[productId]) {
+        cart?.[productId]?.items.push(selected)
+        dispatch({
+          type: 'set',
+          cart: {
+            ...cart,
+          },
+        })
+      } else {
+        productArray.push(selected)
+        dispatch({
+          type: 'set',
+          cart: {
+            ...cart,
+            [productId]: { productId, name: product?.product, items: productArray, qty },
+          },
+        })
+      }
+      setSelected({})
     } else {
-      productArray.push(selected)
-      dispatch({
-        type: 'set',
-        cart: {
-          ...cart,
-          [productId]: { productId, name: product?.product, items: productArray, qty },
-        },
-      })
+      alert('No feature selected')
     }
-    setSelected({})
   }
   return (
     <div>

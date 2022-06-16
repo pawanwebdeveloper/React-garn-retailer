@@ -40,7 +40,7 @@ export default function SelectedWholesalers() {
           <CCardBody>
             <CRow>
               <CCol xs={12}>
-                <p className="heading3 text_medium">Selected Wholesalers</p>
+                <div className="paragraph1 text_bold mb-2">Selected Wholesalers</div>
               </CCol>
               <div className="check_ic d-flex">{renderSelectedWholesalers()}</div>
             </CRow>

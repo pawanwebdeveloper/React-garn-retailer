@@ -15,7 +15,16 @@ export default function ProductCategory() {
   const categories = useSelector((state) => state.categories)
   const selected = useSelector((state) => state.selectedCategories)
   const getCategories = () => {
-    getData(Constants.END_POINT.GET_CATEGORIES)
+    getData(Constants.END_POINT.GET_CATEGORIES, {
+      params: {
+        user_id: 73,
+        page: 1,
+        items_per_page: 12,
+        status: 'A',
+        max_nesting_level: '1',
+        parent_category_id: '0',
+      },
+    })
       .then((result) => {
         dispatch({
           type: 'set',
@@ -62,7 +71,7 @@ export default function ProductCategory() {
       <CCardBody>
         <CRow>
           <CCol xs={12}>
-            <p className="heading3 text_medium">Product Category</p>
+            <div className="paragraph1 text_bold mb-2">Product Category</div>
           </CCol>
           <div className="row p-1 m-0 mb-2">{categories && renderCategories()}</div>
         </CRow>
