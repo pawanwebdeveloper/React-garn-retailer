@@ -41,7 +41,7 @@ const Login = () => {
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md={9} className="px-5">
+          <CCol xs={12} md={9} className="px-2 px-md-5">
             <CCardGroup>
               <CCard className="px-4 py-5 rounded">
                 <CCardBody>
