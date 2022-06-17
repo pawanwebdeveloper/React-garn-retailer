@@ -1,5 +1,5 @@
 export default class Constants {
-  static BASE_URL = 'http://dev.garnenterprise.com/'
+  static BASE_URL = 'https://staging.admin.garnenterprise.com/'
   static END_POINT = {
     GET_CATEGORIES: 'api/vendor_categories',
     GET_CAT_PRODUCTS: 'api/GnProductsApi/',
