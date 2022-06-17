@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -12,67 +12,102 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
+  CFormLabel,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import { ReactComponent as Logo } from 'src/assets/icons/logo.svg'
 
 const Login = () => {
+  let navigate = useNavigate()
+  const [values, setValues] = useState({
+    email: null,
+    password: null,
+  })
+
+  const handleChange = (name, e) => {
+    setValues({ ...values, [name]: e.target.value })
+  }
+
+  const submit = (e) => {
+    e.preventDefault()
+    if (values.email && values.password) {
+      console.log('working')
+      navigate('/dashboard')
+    }
+  }
+  console.log(values)
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md={8}>
+          <CCol md={9} className="px-5">
             <CCardGroup>
-              <CCard className="p-4">
+              <CCard className="px-4 py-5 rounded">
                 <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                  <CForm onSubmit={(e) => submit(e)}>
+                    <div className="d-flex justify-content-center mb-4">
+                      <Logo />
+                    </div>
+                    <p className="text-dark h5 text-center mb-4">
+                      Please Sign In or Create an Account
+                    </p>
+                    <CInputGroup className="mb-1">
+                      <CFormLabel htmlFor="nf-email" className="text-medium-emphasis">
+                        Email
+                      </CFormLabel>
                     </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
+                    <CInputGroup className="mb-3">
                       <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
+                        value={values.email}
+                        type="email"
+                        id="nf-email"
+                        name="nf-email"
+                        autoComplete="email"
+                        onChange={(e) => handleChange('email', e)}
                       />
                     </CInputGroup>
+                    <CInputGroup className="mb-1">
+                      <CFormLabel htmlFor="nf-password" className="text-medium-emphasis">
+                        Password
+                      </CFormLabel>
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
+                      <CFormInput
+                        value={values.password}
+                        type="password"
+                        id="nf-password"
+                        name="nf-password"
+                        autoComplete="current-password"
+                        onChange={(e) => handleChange('password', e)}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
+                      <Link
+                        to="/resetpassword"
+                        className="text-medium-emphasis text-decoration-none"
+                      >
+                        Forgot Password?
+                      </Link>
+                    </CInputGroup>
+                    <CInputGroup className="mb-4">
+                      <Link to="/register" className="text-medium-emphasis text-decoration-none">
+                        Create an Account
+                      </Link>
+                    </CInputGroup>
                     <CRow>
-                      <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                      <CCol xs={12}>
+                        <CButton
+                          style={{ backgroundColor: '#212529' }}
+                          color="dark"
+                          className="w-100 mb-3"
+                          type="submit"
+                        >
                           Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
                         </CButton>
                       </CCol>
                     </CRow>
                   </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
                 </CCardBody>
               </CCard>
             </CCardGroup>
