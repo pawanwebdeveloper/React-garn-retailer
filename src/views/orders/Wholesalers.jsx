@@ -9,19 +9,22 @@ import { getData } from 'src/services/http.service'
 import Constants from 'src/services/constant'
 
 export default function Wholesalers() {
-  useEffect(() => {
-    getWholesalers()
-  }, [])
   const dispatch = useDispatch()
   const AllWholesalers = useSelector((state) => state.Wholesalers)
   const selectedWholesalers = useSelector((state) => state.selectedWholesalers)
+  const [pageNo, setPageNo] = useState(1)
+
+  useEffect(() => {
+    getWholesalers()
+  }, [pageNo])
+
   const getWholesalers = () => {
     getData(Constants.END_POINT.GET_WHOLESALERS, {
       params: {
         user_id: 73,
         is_master_vendor: 1,
-        page: 1,
-        items_per_page: 20,
+        page: pageNo,
+        items_per_page: 12,
         show_companies_force: 1,
         status: 'A',
       },
@@ -93,33 +96,46 @@ export default function Wholesalers() {
                       <span className="text-secondary">{AllWholesalers?.params?.total_items}</span>
                     </p>
                   </div>
-                  {/* <div className="col-md-8 col-12">
-                    <div className="pagination d-flex">
-                      <ul className="pagination pagination-lg">
-                        <li className="page-item disabled">
-                          <a className="page-link border-0">Prev</a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link border-0">1</a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link border-0">2</a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link border-0">3</a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link border-0">4</a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link border-0">5</a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link border-0">Next</a>
-                        </li>
-                      </ul>
+                  <div className="col-md-8 col-12">
+                    <div className="d-flex flex-wrap ">
+                      <div className="feature paragraph3">PREV</div>
+                      <div className="feature">&lt;</div>
+                      <div
+                        onClick={() => setPageNo(1)}
+                        className={
+                          AllWholesalers?.params?.page === 1 ? 'feature feature-active' : 'feature'
+                        }
+                      >
+                        1
+                      </div>
+                      <div
+                        onClick={() => setPageNo(2)}
+                        className={
+                          AllWholesalers?.params?.page === 2 ? 'feature feature-active' : 'feature'
+                        }
+                      >
+                        2
+                      </div>
+                      <div
+                        onClick={() => setPageNo(3)}
+                        className={
+                          AllWholesalers?.params?.page === 3 ? 'feature feature-active' : 'feature'
+                        }
+                      >
+                        3
+                      </div>
+                      <div
+                        onClick={() => setPageNo(4)}
+                        className={
+                          AllWholesalers?.params?.page === 4 ? 'feature feature-active' : 'feature'
+                        }
+                      >
+                        4
+                      </div>
+                      <div className="feature">&#62;</div>
+                      <div className="feature paragraph3">NEXT</div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </CRow>
             </CCardBody>

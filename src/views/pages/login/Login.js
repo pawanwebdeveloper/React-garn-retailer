@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate, Route, Navigate, Routes } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -18,6 +18,10 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { ReactComponent as Logo } from 'src/assets/icons/logo.svg'
 
+import { postData } from 'src/services/http.service'
+import Constants from 'src/services/constant'
+import { authenticate, isAuthenticated } from 'src/services/auth'
+
 const Login = () => {
   let navigate = useNavigate()
   const [values, setValues] = useState({
@@ -32,11 +36,26 @@ const Login = () => {
   const submit = (e) => {
     e.preventDefault()
     if (values.email && values.password) {
-      console.log('working')
+      postData(Constants.END_POINT.LOGIN, { user_login: values.email, password: values.password })
+        .then((result) => {
+          console.log(result)
+          alert(result.message)
+          if (result.success) {
+            authenticate(result.vendor_data, () => {
+              performRedirect()
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }
+  const performRedirect = () => {
+    if (isAuthenticated()) {
       navigate('/dashboard')
     }
   }
-  console.log(values)
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>

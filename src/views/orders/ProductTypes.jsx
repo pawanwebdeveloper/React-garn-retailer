@@ -9,9 +9,13 @@ import { getData } from 'src/services/http.service'
 import Constants from 'src/services/constant'
 
 export default function ProductTypes() {
+  const [pageNo, setPageNo] = useState(1)
+  const [totalPages, setTotalPages] = useState(null)
+  const itemsPerPage = 12
+
   useEffect(() => {
     getProductTypes()
-  }, [])
+  }, [pageNo])
 
   const dispatch = useDispatch()
   const masterProducts = useSelector((state) => state.masterProducts)
@@ -21,8 +25,8 @@ export default function ProductTypes() {
     getData(Constants.END_POINT.GET_WHOLESALERS_PRODUCTS, {
       params: {
         user_id: 73,
-        page: 1,
-        items_per_page: 12,
+        page: pageNo,
+        items_per_page: itemsPerPage,
         show_master_products_only: 1,
         product_type: 'P',
       },
@@ -32,10 +36,53 @@ export default function ProductTypes() {
           type: 'set',
           masterProducts: result,
         })
+        let len = result?.params?.total_items / result?.params?.items_per_page
+        setTotalPages(Math.ceil(len))
       })
       .catch((err) => {
         console.log(err)
       })
+  }
+  console.log('totalPages==>', totalPages)
+  const renderPagination = () => {
+    let a = []
+    if (totalPages > 5) {
+      if (pageNo > 2) {
+        for (let i = pageNo - 1; i <= pageNo + 2 && totalPages; i++) {
+          a.push(
+            <div
+              onClick={() => setPageNo(i)}
+              className={masterProducts?.params?.page === i ? 'feature feature-active' : 'feature'}
+            >
+              {i}
+            </div>,
+          )
+        }
+      } else {
+        for (let i = pageNo; i <= pageNo + 4 && totalPages; i++) {
+          a.push(
+            <div
+              onClick={() => setPageNo(i)}
+              className={masterProducts?.params?.page === i ? 'feature feature-active' : 'feature'}
+            >
+              {i}
+            </div>,
+          )
+        }
+      }
+    } else {
+      for (let i = pageNo; i <= totalPages; i++) {
+        a.push(
+          <div
+            onClick={() => setPageNo(i)}
+            className={masterProducts?.params?.page === i ? 'feature feature-active' : 'feature'}
+          >
+            {i}
+          </div>,
+        )
+      }
+    }
+    return a
   }
   const renderproducts = () => {
     return masterProducts.products.map((item, i) => (
@@ -88,10 +135,33 @@ export default function ProductTypes() {
                 <div className="row m-0">
                   <div className="col-md-4 col-12">
                     <p className="text-dark">
-                      Total Items: <span className="text-secondary">11</span>
+                      Items per page:{' '}
+                      <span className="text-secondary">
+                        {masterProducts?.params?.items_per_page}
+                      </span>
+                    </p>
+                    <p className="text-dark">
+                      Total Items:{' '}
+                      <span className="text-secondary">{masterProducts?.params?.total_items}</span>
                     </p>
                   </div>
-                  <div className="col-md-8 col-12"></div>
+                  <div className="col-md-8 col-12">
+                    <div className="d-flex flex-wrap ">
+                      <div className="feature paragraph3" onClick={() => setPageNo(1)}>
+                        PREV
+                      </div>
+                      <div onClick={() => setPageNo(pageNo - 1)} className="feature">
+                        &lt;
+                      </div>
+                      {totalPages && renderPagination()}
+                      <div className="feature" onClick={() => setPageNo(pageNo + 1)}>
+                        &#62;
+                      </div>
+                      <div className="feature paragraph3" onClick={() => setPageNo(totalPages)}>
+                        NEXT
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </CRow>
             </CCardBody>

@@ -25,7 +25,7 @@ export default function Orders() {
   console.log('selectedFeatures==>', selectedFeatures)
 
   const getProducts = () => {
-    let p = { user_id: 73, page: 1, items_per_page: 12, group_by_sellers_offers: 1 }
+    let p = { page: 1, items_per_page: 12, group_by_sellers_offers: 1 }
     if (Object.keys(selectedWholesalers)?.length) {
       p.company_ids = Object.keys(selectedWholesalers).toString()
     }

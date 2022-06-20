@@ -6,6 +6,7 @@ import { Buffer } from 'buffer'
 export const getData = (url, p) => {
   var username = 'wholesaler_app@ecarter.co'
   var password = '09i4u73157N5Jnl3f6C6t2XAKa5qFO31'
+  p.params.user_id = isAuthenticated()?.user_id
   console.log(p)
   return axios
     .get(
