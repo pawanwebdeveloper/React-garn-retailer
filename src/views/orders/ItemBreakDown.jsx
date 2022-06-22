@@ -3,29 +3,12 @@ import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Accordion } from 'react-bootstrap'
 
+import { postData } from 'src/services/http.service'
+import Constants from 'src/services/constant'
+
 export default function ItemBreakDown() {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
-
-  // const renderBreakDown = () => {
-  //   return Object.keys(cart).map((id, i) => (
-  //     <div key={i}>
-  //       <CCol xs={12}>
-  //         <h6 className="text-dark mb-3">
-  //           <u>{cart?.[id].name}</u>
-  //         </h6>
-  //       </CCol>
-
-  //       <h6 className="text-dark mb-3">
-  //         2000 <span className="text-secondary">(PCS)</span>
-  //       </h6>
-  //       {renderItems(cart?.[id].items, id)}
-  //       <div className="check_ic">
-  //         <div className="left_b mb-2"></div>
-  //       </div>
-  //     </div>
-  //   ))
-  // }
 
   const renderBreakDown = () => {
     return Object.keys(cart).map((id, i) => (
@@ -108,6 +91,36 @@ export default function ItemBreakDown() {
       })
     }
   }
+
+  const createRes = () => {
+    let payload = {}
+    let products = []
+    Object.keys(cart).map((p_id, i) => {
+      if (cart[p_id]?.items?.length > 0) {
+        cart[p_id]?.items.map((item, i) => {
+          let obj = { product_id: p_id }
+          Object.keys(item).map((f_id, i) => {
+            if (f_id !== 'qty') {
+              obj[f_id] = Object.keys(item[f_id])[0]
+            }
+            obj.amount = item?.qty
+          })
+          products.push(obj)
+        })
+      }
+    })
+    payload.products = products
+    payload.user_id = '73'
+    console.log(payload)
+
+    postData(Constants.END_POINT.CART, payload)
+      .then((result) => {
+        console.log(result)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   return (
     <div>
       {Object.keys(cart)?.length ? (
@@ -124,7 +137,9 @@ export default function ItemBreakDown() {
               </div>
 
               <div className="row m-0 justify-content-center">
-                <div className="large-btn w-100">TO CART</div>
+                <div onClick={() => createRes()} className="large-btn w-100">
+                  TO CART
+                </div>
               </div>
             </CRow>
           </CCardBody>

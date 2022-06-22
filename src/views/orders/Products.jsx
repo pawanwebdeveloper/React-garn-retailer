@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getData } from 'src/services/http.service'
@@ -7,9 +7,32 @@ import Constants from 'src/services/constant'
 import iconBadge from '../../assets/icons/check-circle.png'
 
 export default function Products() {
+  const [pageNo, setPageNo] = useState(1)
+  const [totalPages, setTotalPages] = useState(null)
+  const itemsPerPage = 12
+
+  const renderPagination = () => {
+    let a = []
+    for (let i = pageNo - 2; i <= pageNo + 2; i++) {
+      if (i <= totalPages && i > 0) {
+        a.push(
+          <div
+            onClick={() => setPageNo(i)}
+            className={allProducts?.params?.page === i ? 'feature feature-active' : 'feature'}
+          >
+            {i}
+          </div>,
+        )
+      }
+    }
+    return a
+  }
+
   useEffect(() => {
-    // getProducts()
-  }, [])
+    if (pageNo) {
+      getProducts()
+    }
+  }, [pageNo])
 
   const dispatch = useDispatch()
   const allProducts = useSelector((state) => state.allProducts)
@@ -19,8 +42,8 @@ export default function Products() {
     getData(Constants.END_POINT.GET_WHOLESALERS_PRODUCTS, {
       params: {
         user_id: 73,
-        page: 2,
-        items_per_page: 12,
+        page: pageNo,
+        items_per_page: itemsPerPage,
         // company_ids: 1,
         master_product_ids: 9213,
       },
@@ -31,6 +54,8 @@ export default function Products() {
           type: 'set',
           allProducts: result,
         })
+        let len = result?.params?.total_items / result?.params?.items_per_page
+        setTotalPages(Math.ceil(len))
       })
       .catch((err) => {
         console.log(err)
@@ -83,46 +108,29 @@ export default function Products() {
                     <span className="text-secondary">{allProducts?.params?.total_items}</span>
                   </p>
                 </div>
-                <div className="col-md-8 col-12">
-                  {/* <div className="pagination d-flex">
-            <ul className="pagination pagination-lg">
-              <li className="page-item disabled">
-                <a className="page-link border-0" href="http://tonancos.com/26iY">
-                  Prev
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link border-0" href="http://tonancos.com/26iY">
-                  1
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link border-0" href="http://tonancos.com/26iY">
-                  2
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link border-0" href="http://tonancos.com/26iY">
-                  3
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link border-0" href="http://tonancos.com/26iY">
-                  4
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link border-0" href="http://tonancos.com/26iY">
-                  5
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link border-0" href="http://tonancos.com/26iY">
-                  Next
-                </a>
-              </li>
-            </ul>
-          </div> */}
+                <div className="col-md-8 col-12 mb-5">
+                  <div className="d-flex flex-wrap ">
+                    <div className="feature paragraph3" onClick={() => setPageNo(1)}>
+                      PREV
+                    </div>
+                    <div
+                      onClick={() => {
+                        if (pageNo > 1) {
+                          setPageNo(pageNo - 1)
+                        }
+                      }}
+                      className="feature"
+                    >
+                      &lt;
+                    </div>
+                    {totalPages && renderPagination()}
+                    <div className="feature" onClick={() => setPageNo(pageNo + 1)}>
+                      &#62;
+                    </div>
+                    <div className="feature paragraph3" onClick={() => setPageNo(totalPages)}>
+                      NEXT
+                    </div>
+                  </div>
                 </div>
               </div>
             </CRow>

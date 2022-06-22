@@ -10,5 +10,7 @@ export default class Constants {
     GET_WHOLESALERS_PRODUCTS: 'api/vendor_products',
 
     GET_FEATURES: 'api/vendor_features',
+
+    CART: 'api/cart/',
   }
 }

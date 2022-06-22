@@ -160,7 +160,11 @@ export default function Orders() {
         <Products />
         <Product />
         {allProducts?.products?.length ? (
-          ''
+          <div className="row m-0 justify-content-center">
+            <div onClick={() => getProducts()} className="large-btn">
+              GET OFFERS
+            </div>
+          </div>
         ) : (
           <div className="row m-0 justify-content-center">
             <div onClick={() => getProducts()} className="large-btn">

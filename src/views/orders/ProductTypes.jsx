@@ -43,35 +43,11 @@ export default function ProductTypes() {
         console.log(err)
       })
   }
-  console.log('totalPages==>', totalPages)
+
   const renderPagination = () => {
     let a = []
-    if (totalPages > 5) {
-      if (pageNo > 2) {
-        for (let i = pageNo - 1; i <= pageNo + 2 && totalPages; i++) {
-          a.push(
-            <div
-              onClick={() => setPageNo(i)}
-              className={masterProducts?.params?.page === i ? 'feature feature-active' : 'feature'}
-            >
-              {i}
-            </div>,
-          )
-        }
-      } else {
-        for (let i = pageNo; i <= pageNo + 4 && totalPages; i++) {
-          a.push(
-            <div
-              onClick={() => setPageNo(i)}
-              className={masterProducts?.params?.page === i ? 'feature feature-active' : 'feature'}
-            >
-              {i}
-            </div>,
-          )
-        }
-      }
-    } else {
-      for (let i = pageNo; i <= totalPages; i++) {
+    for (let i = pageNo - 2; i <= pageNo + 2; i++) {
+      if (i <= totalPages && i > 0) {
         a.push(
           <div
             onClick={() => setPageNo(i)}
@@ -150,7 +126,14 @@ export default function ProductTypes() {
                       <div className="feature paragraph3" onClick={() => setPageNo(1)}>
                         PREV
                       </div>
-                      <div onClick={() => setPageNo(pageNo - 1)} className="feature">
+                      <div
+                        onClick={() => {
+                          if (pageNo > 1) {
+                            setPageNo(pageNo - 1)
+                          }
+                        }}
+                        className="feature"
+                      >
                         &lt;
                       </div>
                       {totalPages && renderPagination()}
