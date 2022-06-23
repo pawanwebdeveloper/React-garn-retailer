@@ -120,45 +120,13 @@ const initialState = {
   selectedProducts: {},
   allProducts: {},
 
-  // allProducts: {
-  //   products: [
-  //     {
-  //       product_id: '9099',
-  //       product: 'สร้อยข้อมือทองคำ 96.5% ลายเบนซ์โปร่งคั่นประคำลงยาฝังพลอย',
-  //       product_type: 'P',
-  //       master_product_id: '8065',
-  //       company_id: '83',
-  //       product_code: 'B965-2201-0037-5B-04-5 บาท',
-  //       status: 'A',
-  //       list_price: '0.00',
-  //       amount: '1',
-  //       category_ids: [301],
-  //       main_category: 301,
-  //       category_name: 'Bracelet',
-  //       main_pair: {
-  //         pair_id: '97347',
-  //         detailed: {
-  //           object_id: '9099',
-  //           object_type: 'product',
-  //           type: 'M',
-  //           https_image_path: 'https://dev.garnenterprise.com/images/detailed/63/IMG_2786.JPG',
-  //         },
-  //       },
-  //     },
-  //   ],
-  //   params: {
-  //     page: 1,
-  //     items_per_page: 10,
-  //     user_id: '73',
-  //     sort_order: 'asc',
-  //     total_items: '33',
-  //   },
-  // },
   productId: null,
   features: [],
   selectedFeatures: {},
 
   cart: {},
+
+  productPageNo: 1,
 }
 const changeState = (state = initialState, { type, ...rest }) => {
   switch (type) {

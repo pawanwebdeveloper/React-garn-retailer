@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 
@@ -22,10 +22,27 @@ export default function Orders() {
   const selectedWholesalers = useSelector((state) => state.selectedWholesalers)
   const selectedProducts = useSelector((state) => state.selectedProducts)
   const selectedFeatures = useSelector((state) => state.selectedFeatures)
-  console.log('selectedFeatures==>', selectedFeatures)
+  const productPageNo = useSelector((state) => state.productPageNo)
+
+  useEffect(() => {
+    getProducts()
+  }, [productPageNo])
 
   const getProducts = () => {
-    let p = { page: 1, items_per_page: 12, group_by_sellers_offers: 1 }
+    let p = {
+      page: productPageNo,
+      items_per_page: 12,
+      get_wholselers_products_stock: 1,
+      show_master_products_only: 1,
+
+      // cid: 337,
+    }
+
+    if (Object.keys(selectedCategories)?.length) {
+      p.cid = Object.keys(selectedCategories).toString()
+      p.subcats = 1
+    }
+
     if (Object.keys(selectedWholesalers)?.length) {
       p.company_ids = Object.keys(selectedWholesalers).toString()
     }

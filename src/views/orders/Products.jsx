@@ -7,7 +7,7 @@ import Constants from 'src/services/constant'
 import iconBadge from '../../assets/icons/check-circle.png'
 
 export default function Products() {
-  const [pageNo, setPageNo] = useState(1)
+  // const [pageNo, setPageNo] = useState(1)
   const [totalPages, setTotalPages] = useState(null)
   const itemsPerPage = 12
 
@@ -28,15 +28,21 @@ export default function Products() {
     return a
   }
 
-  useEffect(() => {
-    if (pageNo) {
-      getProducts()
-    }
-  }, [pageNo])
+  // useEffect(() => {
+  //   if (pageNo) {
+  //     getProducts()
+  //   }
+  // }, [pageNo])
 
   const dispatch = useDispatch()
   const allProducts = useSelector((state) => state.allProducts)
   const productId = useSelector((state) => state.productId)
+  const pageNo = useSelector((state) => state.productPageNo)
+
+  useEffect(() => {
+    let len = allProducts?.params?.total_items / allProducts?.params?.items_per_page
+    setTotalPages(Math.ceil(len))
+  }, [allProducts])
 
   const getProducts = () => {
     getData(Constants.END_POINT.GET_WHOLESALERS_PRODUCTS, {
@@ -49,13 +55,10 @@ export default function Products() {
       },
     })
       .then((result) => {
-        console.log(result)
         dispatch({
           type: 'set',
           allProducts: result,
         })
-        let len = result?.params?.total_items / result?.params?.items_per_page
-        setTotalPages(Math.ceil(len))
       })
       .catch((err) => {
         console.log(err)
@@ -86,6 +89,13 @@ export default function Products() {
     dispatch({
       type: 'set',
       productId: id,
+    })
+  }
+
+  const setPageNo = (num) => {
+    dispatch({
+      type: 'set',
+      productPageNo: num,
     })
   }
 
