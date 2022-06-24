@@ -127,6 +127,8 @@ const initialState = {
   cart: {},
 
   productPageNo: 1,
+
+  cartResponse: {},
 }
 const changeState = (state = initialState, { type, ...rest }) => {
   switch (type) {

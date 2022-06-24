@@ -5,8 +5,13 @@ import { Accordion } from 'react-bootstrap'
 
 import { postData } from 'src/services/http.service'
 import Constants from 'src/services/constant'
+import { isAuthenticated } from 'src/services/auth.js'
+
+import { useNavigate } from 'react-router-dom'
 
 export default function ItemBreakDown() {
+  let navigate = useNavigate()
+
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
 
@@ -110,12 +115,17 @@ export default function ItemBreakDown() {
       }
     })
     payload.products = products
-    payload.user_id = '73'
+    payload.user_id = isAuthenticated().user_id
     console.log(payload)
 
     postData(Constants.END_POINT.CART, payload)
       .then((result) => {
         console.log(result)
+        dispatch({
+          type: 'set',
+          cartResponse: result,
+        })
+        navigate('/orders')
       })
       .catch((err) => {
         console.log(err)
