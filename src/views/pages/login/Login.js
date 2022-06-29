@@ -39,7 +39,7 @@ const Login = () => {
       postData(Constants.END_POINT.LOGIN, { user_login: values.email, password: values.password })
         .then((result) => {
           console.log(result)
-          alert(result.message)
+          // alert(result.message)
           if (result.success) {
             authenticate(result.vendor_data, () => {
               performRedirect()

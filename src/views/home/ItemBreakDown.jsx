@@ -72,7 +72,7 @@ export default function ItemBreakDown() {
     return Object.keys(items).map((f_id, i) => {
       if (f_id != 'qty') {
         return (
-          <span>
+          <span key={i}>
             {items?.[f_id]?.[Object.keys(items?.[f_id])[0]]?.variant?.slice(0, 2)}
             {Object.keys(items).length - 2 === i ? '' : '/'}
           </span>
@@ -116,16 +116,17 @@ export default function ItemBreakDown() {
     })
     payload.products = products
     payload.user_id = isAuthenticated().user_id
-    console.log(payload)
-
     postData(Constants.END_POINT.CART, payload)
       .then((result) => {
-        console.log(result)
-        dispatch({
-          type: 'set',
-          cartResponse: result,
-        })
-        navigate('/orders')
+        if (result?.response?.status === 404) {
+          alert(result?.message)
+        } else {
+          dispatch({
+            type: 'set',
+            cartResponse: result,
+          })
+          navigate('/orders')
+        }
       })
       .catch((err) => {
         console.log(err)

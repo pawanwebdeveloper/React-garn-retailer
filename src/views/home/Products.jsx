@@ -13,10 +13,11 @@ export default function Products() {
 
   const renderPagination = () => {
     let a = []
-    for (let i = pageNo - 2; i <= pageNo + 2; i++) {
+    for (let i = pageNo - 2; i <= pageNo + 2; i++) 
       if (i <= totalPages && i > 0) {
         a.push(
           <div
+            key={i}
             onClick={() => setPageNo(i)}
             className={allProducts?.params?.page === i ? 'feature feature-active' : 'feature'}
           >

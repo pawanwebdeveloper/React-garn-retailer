@@ -9,7 +9,7 @@ export default function StockProducts() {
   const cartResponse = useSelector((state) => state.cartResponse)
 
   const renderProducts = () => {
-    return cartResponse?.stock_request_info[0]?.products.map((item, i) => (
+    return cartResponse?.stock_request_info?.['90']?.products.map((item, i) => (
       <CRow key={i} className="mb-2 p-2 border-bottom">
         <CCol md={5}>
           <CRow className="">
@@ -30,10 +30,10 @@ export default function StockProducts() {
         <CCol md={7}>
           <CRow>
             <CCol md={3}>
-              <p className="heading6 text_semibold">{item?.weight}</p>
+              <p className="heading6 text_semibold">{item?.variation_features?.['557']?.variant}</p>
             </CCol>
             <CCol md={3}>
-              <p className="heading6 text_semibold">{item?.length}</p>
+              <p className="heading6 text_semibold">{item?.variation_features?.['548']?.variant}</p>
             </CCol>
             <CCol md={3}>
               <p className="heading6 text_semibold">
@@ -48,8 +48,6 @@ export default function StockProducts() {
       </CRow>
     ))
   }
-
-  console.log(cartResponse)
   return (
     <div>
       <div className="row m-0">
@@ -75,7 +73,7 @@ export default function StockProducts() {
       </div>
       <CCard className=" mb-4 box_items">
         <CCardBody>
-          {cartResponse?.stock_request_info?.[0]?.products.length ? (
+          {cartResponse?.stock_request_info?.['90']?.products.length ? (
             renderProducts()
           ) : (
             <CRow className="mb-2 p-2 border-bottom">
@@ -109,45 +107,20 @@ export default function StockProducts() {
               </CCol>
             </CRow>
           )}
-
-          {/* <CRow className="mb-2 p-2 border-bottom">
-            <CCol md={5}>
-              <CRow className="">
-                <CCol md={3}>
-                  <div className="stock_bg rounded p-1">
-                    <img src={Necklacepro} alt="" className="w-50  m-auto d-block" />
-                  </div>
-                </CCol>
-                <CCol md={9}>
-                  <p className="">PROCYON- Bold Herringbone Chain Necklace</p>
-                </CCol>
-              </CRow>
-            </CCol>
-            <CCol md={7}>
-              <CRow>
-                <CCol md={3}>
-                  <p className="heading6 text_semibold">3.8 Gram</p>
-                </CCol>
-                <CCol md={3}>
-                  <p className="heading6 text_semibold">45 Cm</p>
-                </CCol>
-                <CCol md={3}>
-                  <p className="heading6 text_semibold">20 Pcs</p>
-                </CCol>
-                <CCol md={3}>
-                  <p className="heading6 text_semibold ">200 Gram</p>
-                </CCol>
-              </CRow>
-            </CCol>
-          </CRow> */}
           <CRow>
             <CCol xs={8}></CCol>
             <CCol xs={4}>
               <p className=" text_semibold text-right">
-                Total Quantity: <span className="heading6 text_semibold"> 80 Pcs</span>
+                Total Quantity:{' '}
+                <span className="heading6 text_semibold">
+                  {cartResponse?.stock_request_info?.['90']?.user_data?.total_amount} Pcs
+                </span>
               </p>
               <p className=" text_semibold text-right">
-                Total Weight: <span className="heading6 text_semibold"> 800 Gram</span>
+                Total Weight:{' '}
+                <span className="heading6 text_semibold">
+                  {cartResponse?.stock_request_info?.['90']?.user_data?.total_system_weight} Gram
+                </span>
               </p>
             </CCol>
           </CRow>

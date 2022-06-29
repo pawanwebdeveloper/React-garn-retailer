@@ -32,8 +32,9 @@ export default function Orders() {
     let p = {
       page: productPageNo,
       items_per_page: 12,
-      get_wholselers_products_stock: 1,
-      show_master_products_only: 1,
+      group_by_seller_offers: 1,
+      // get_wholselers_products_stock: 1,
+      // show_master_products_only: 1,
     }
 
     if (Object.keys(selectedCategories)?.length) {

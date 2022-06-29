@@ -50,6 +50,7 @@ export default function ProductTypes() {
       if (i <= totalPages && i > 0) {
         a.push(
           <div
+            key={i}
             onClick={() => setPageNo(i)}
             className={masterProducts?.params?.page === i ? 'feature feature-active' : 'feature'}
           >
