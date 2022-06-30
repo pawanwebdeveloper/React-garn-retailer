@@ -13,7 +13,7 @@ export default function Products() {
 
   const renderPagination = () => {
     let a = []
-    for (let i = pageNo - 2; i <= pageNo + 2; i++) 
+    for (let i = pageNo - 2; i <= pageNo + 2; i++) {
       if (i <= totalPages && i > 0) {
         a.push(
           <div
@@ -104,7 +104,7 @@ export default function Products() {
     <div>
       {allProducts?.products?.length ? (
         <CCard className="mb-4 box_items">
-          <CCardBody>
+          <CCardBody className="pb-0 ">
             <CRow>
               <CCol xs={12}>
                 <p className="heading3 text_medium">Products</p>

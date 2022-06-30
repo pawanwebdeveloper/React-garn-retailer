@@ -38,7 +38,7 @@ const Register = () => {
                       </CFormLabel>
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CFormInput type="text" id="nf-user" autoComplete="user" />
+                      <CFormInput required={true} type="text" id="nf-user" autoComplete="user" />
                     </CInputGroup>
                     <CInputGroup className="mb-1">
                       <CFormLabel htmlFor="nf-email" className="text-medium-emphasis">
@@ -46,7 +46,13 @@ const Register = () => {
                       </CFormLabel>
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CFormInput type="email" id="nf-email" name="nf-email" autoComplete="email" />
+                      <CFormInput
+                        required={true}
+                        type="email"
+                        id="nf-email"
+                        name="nf-email"
+                        autoComplete="email"
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-1">
                       <CFormLabel htmlFor="nf-password" className="text-medium-emphasis">
@@ -55,6 +61,7 @@ const Register = () => {
                     </CInputGroup>
                     <CInputGroup className="mb-3">
                       <CFormInput
+                        required={true}
                         type="password"
                         id="nf-password"
                         name="nf-password"
@@ -80,6 +87,7 @@ const Register = () => {
                           style={{ backgroundColor: '#212529' }}
                           color="dark"
                           className="w-100 mb-3"
+                          type="submit"
                         >
                           Sign Up
                         </CButton>

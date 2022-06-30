@@ -17,7 +17,6 @@ export default function ProductCategory() {
   const getCategories = () => {
     getData(Constants.END_POINT.GET_CATEGORIES, {
       params: {
-        user_id: 73,
         page: 1,
         items_per_page: 12,
         status: 'A',

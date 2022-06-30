@@ -102,9 +102,9 @@ export default function ProductTypes() {
         <Accordion.Header>
           <p className="heading3 text_medium">Please Select Your Product Type</p>
         </Accordion.Header>
-        <Accordion.Body>
-          <CCard className="mb-4 box_items">
-            <CCardBody>
+        <Accordion.Body className="py-0">
+          <CCard className="box_items">
+            <CCardBody className="py-0">
               <CRow>
                 <div className="row p-1 m-0 mb-2">
                   {masterProducts?.products?.length && renderproducts()}

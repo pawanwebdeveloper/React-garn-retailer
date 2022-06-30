@@ -51,7 +51,7 @@ export default function Wholesalers() {
             <img src={item?.logo?.theme?.image?.https_image_path} alt="" width="37px" />
             <img src={iconBadge} className="iconbadge" alt="" />
           </div>
-          <p className="heading5 text_medium text-center">{item.company.slice(0, 8)}</p>
+          <p className="heading5 text_medium text-center">{item.company}</p>
         </div>
       </div>
     ))
@@ -76,9 +76,9 @@ export default function Wholesalers() {
         <Accordion.Header>
           <p className="heading3 text_medium">Select Wholesalers</p>
         </Accordion.Header>
-        <Accordion.Body>
-          <CCard className="mb-4 box_items">
-            <CCardBody>
+        <Accordion.Body className="py-0">
+          <CCard className=" box_items">
+            <CCardBody className="py-0">
               <CRow>
                 <div className="row p-1 m-0 mb-2">
                   {AllWholesalers?.vendors?.length && renderWholesalers()}

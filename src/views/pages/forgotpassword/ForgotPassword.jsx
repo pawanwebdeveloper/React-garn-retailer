@@ -36,7 +36,13 @@ const ForgotPassword = () => {
                       </CFormLabel>
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CFormInput type="email" id="nf-email" name="nf-email" autoComplete="email" />
+                      <CFormInput
+                        required={true}
+                        type="email"
+                        id="nf-email"
+                        name="nf-email"
+                        autoComplete="email"
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
                       <Link to="/login" className="text-medium-emphasis text-decoration-none">
@@ -54,6 +60,7 @@ const ForgotPassword = () => {
                           style={{ backgroundColor: '#212529' }}
                           color="dark"
                           className="w-100 mb-3"
+                          type="submit"
                         >
                           Submit
                         </CButton>

@@ -28,6 +28,7 @@ const Login = () => {
     email: null,
     password: null,
   })
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (name, e) => {
     setValues({ ...values, [name]: e.target.value })
@@ -36,6 +37,7 @@ const Login = () => {
   const submit = (e) => {
     e.preventDefault()
     if (values.email && values.password) {
+      setLoading(true)
       postData(Constants.END_POINT.LOGIN, { user_login: values.email, password: values.password })
         .then((result) => {
           console.log(result)
@@ -44,10 +46,17 @@ const Login = () => {
             authenticate(result.vendor_data, () => {
               performRedirect()
             })
+          } else {
+            alert(result.message)
+            // authenticate({ user_id: 73 }, () => {
+            //   performRedirect()
+            // })
           }
+          setLoading(false)
         })
         .catch((err) => {
           console.log(err)
+          setLoading(false)
         })
     }
   }
@@ -78,6 +87,7 @@ const Login = () => {
                     </CInputGroup>
                     <CInputGroup className="mb-3">
                       <CFormInput
+                        required={true}
                         value={values.email}
                         type="email"
                         id="nf-email"
@@ -93,6 +103,7 @@ const Login = () => {
                     </CInputGroup>
                     <CInputGroup className="mb-3">
                       <CFormInput
+                        required={true}
                         value={values.password}
                         type="password"
                         id="nf-password"
@@ -122,7 +133,7 @@ const Login = () => {
                           className="w-100 mb-3"
                           type="submit"
                         >
-                          Login
+                          {loading ? 'Login...' : 'Login'}
                         </CButton>
                       </CCol>
                     </CRow>
