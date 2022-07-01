@@ -42,6 +42,12 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'My Backorder',
+    to: '/backorder',
+    icon: <img src={myorder} customClassName="nav-icon" style={{ marginRight: '20px' }} />,
+  },
+  {
+    component: CNavItem,
     name: 'My Product',
     to: '/products',
     icon: <img src={myproduct} customClassName="nav-icon" style={{ marginRight: '20px' }} />,

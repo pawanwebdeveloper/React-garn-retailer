@@ -118,14 +118,15 @@ export default function ItemBreakDown() {
     payload.user_id = isAuthenticated().user_id
     postData(Constants.END_POINT.CART, payload)
       .then((result) => {
-        if (result?.response?.status === 404) {
-          alert(result?.message)
+        console.log(result)
+        if (result?.response?.status === 400 || result?.response?.status === 404) {
+          alert(result?.response?.data?.message || result?.message)
         } else {
           dispatch({
             type: 'set',
             cartResponse: result,
           })
-          navigate('/orders')
+          navigate('/orders/create')
         }
       })
       .catch((err) => {

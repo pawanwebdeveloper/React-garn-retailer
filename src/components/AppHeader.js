@@ -20,6 +20,7 @@ import { logo } from 'src/assets/brand/logo'
 import calendar from 'src/assets/icons/calendar.png'
 import download from 'src/assets/icons/download.png'
 import notification from 'src/assets/icons/notification.png'
+import { isAuthenticated } from 'src/services/auth'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
@@ -47,7 +48,7 @@ const AppHeader = () => {
           <div>
             <span className="display_small">
               {' '}
-              Welcome, <span className="text_semibold">M. Salim</span>{' '}
+              Welcome, <span className="text_semibold">{isAuthenticated()?.firstname}</span>{' '}
             </span>
             <p className="paragraph1">See your activites and quick action for forward.</p>
           </div>
