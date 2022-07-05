@@ -33,14 +33,25 @@ export default function SelectedWholesalers() {
       })
     }
   }
+
+  const Reset = () => {
+    dispatch({
+      type: 'set',
+      selectedWholesalers: {},
+    })
+  }
   return (
     <div>
       {Object.keys(selectedWholesalers).length ? (
         <CCard className="mb-4 box_items">
           <CCardBody>
             <CRow>
-              <CCol xs={12}>
-                <div className="paragraph1 text_bold mb-2">Selected Wholesalers</div>
+              <CCol xs={12} className="d-flex justify-content-between flex-wrap">
+                <div className="paragraph1 text_bold mb-2">Wholesalers</div>
+
+                <div className="paragraph2 mb-2" onClick={() => Reset()}>
+                  Reset
+                </div>
               </CCol>
               <div className="check_ic d-flex">{renderSelectedWholesalers()}</div>
             </CRow>

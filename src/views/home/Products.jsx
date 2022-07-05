@@ -7,7 +7,6 @@ import Constants from 'src/services/constant'
 import iconBadge from '../../assets/icons/check-circle.png'
 
 export default function Products() {
-  // const [pageNo, setPageNo] = useState(1)
   const [totalPages, setTotalPages] = useState(null)
   const itemsPerPage = 12
 
@@ -29,12 +28,6 @@ export default function Products() {
     return a
   }
 
-  // useEffect(() => {
-  //   if (pageNo) {
-  //     getProducts()
-  //   }
-  // }, [pageNo])
-
   const dispatch = useDispatch()
   const allProducts = useSelector((state) => state.allProducts)
   const productId = useSelector((state) => state.productId)
@@ -48,7 +41,6 @@ export default function Products() {
   const getProducts = () => {
     getData(Constants.END_POINT.GET_WHOLESALERS_PRODUCTS, {
       params: {
-        user_id: 73,
         page: pageNo,
         items_per_page: itemsPerPage,
         // company_ids: 1,

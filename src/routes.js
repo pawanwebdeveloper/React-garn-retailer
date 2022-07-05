@@ -10,12 +10,12 @@ const Products = React.lazy(() => import('./views/products/Products'))
 const RequestStock = React.lazy(() => import('./views/RequestStock/RequestStock.js'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Home },
-  { path: '/products', name: 'Dashboard', element: Products },
+  { path: '/dashboard', name: '', element: Home },
+  { path: '/products', name: '', element: Products },
   { path: '/orders', name: 'Requests for Stock', element: StockRequest },
-  { path: '/orders/create', name: 'Request for Stock', element: CreateOrder },
+  { path: '/orders/create/', name: 'Request for Stock', element: CreateOrder },
   { path: '/backorder', name: 'Backorders', element: BackOrders },
-  { path: '/backorder/detail', name: 'Backorder', element: BackOrderDetails },
+  { path: '/backorder/detail/', name: 'Backorder', element: BackOrderDetails },
   { path: '/RequestStock', name: 'Request Stock', element: RequestStock },
 ]
 

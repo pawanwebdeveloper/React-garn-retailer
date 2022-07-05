@@ -73,7 +73,7 @@ export default function ProductTypes() {
           <div className="pro_img">
             <img src={item?.main_pair?.detailed?.https_image_path} alt="" width="37px" />
             <img src={iconBadge} className="iconbadge" alt="" />
-            <div className="nuber_list">100</div>
+            {/* <div className="nuber_list">100</div> */}
           </div>
           <p className="heading5 text_medium text-center">{item?.product.slice(0, 12)}</p>
         </div>
@@ -98,7 +98,7 @@ export default function ProductTypes() {
 
   return (
     <Accordion defaultActiveKey="0">
-      <Accordion.Item eventKey="1">
+      <Accordion.Item eventKey="0">
         <Accordion.Header>
           <p className="heading3 text_medium">Please Select Your Product Type</p>
         </Accordion.Header>

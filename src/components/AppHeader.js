@@ -1,5 +1,5 @@
 import React from 'react'
-// import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CContainer,
@@ -12,6 +12,7 @@ import {
   // CNavItem,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import routes from '../routes'
 import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 
 // import { AppBreadcrumb } from './index'
@@ -23,6 +24,11 @@ import notification from 'src/assets/icons/notification.png'
 import { isAuthenticated } from 'src/services/auth'
 
 const AppHeader = () => {
+  const currentLocation = useLocation().pathname
+  const getRouteName = () => {
+    const currentRoute = routes.find((route) => route.path === currentLocation)
+    return currentRoute ? currentRoute.name : false
+  }
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
 
@@ -46,11 +52,21 @@ const AppHeader = () => {
         )}
         <div className="d-flex justify-content-between flex-wrap w-100">
           <div>
-            <span className="display_small">
-              {' '}
-              Welcome, <span className="text_semibold">{isAuthenticated()?.firstname}</span>{' '}
-            </span>
-            <p className="paragraph1">See your activites and quick action for forward.</p>
+            {getRouteName() ? (
+              <span className="display_small">
+                <span className="text_semibold">{getRouteName()}</span>
+              </span>
+            ) : (
+              <div>
+                <span className="display_small">
+                  {' '}
+                  Welcome, <span className="text_semibold">
+                    {isAuthenticated()?.firstname}
+                  </span>{' '}
+                </span>
+                <p className="paragraph1">See your activites and quick action for forward.</p>
+              </div>
+            )}
           </div>
           <div className="d-flex">
             <div className="top-btn paragraph2 mx-2">
@@ -60,7 +76,6 @@ const AppHeader = () => {
               Export <img src={download} alt="" />
             </div>
           </div>
-
           <div className="d-flex">
             <div
               style={{

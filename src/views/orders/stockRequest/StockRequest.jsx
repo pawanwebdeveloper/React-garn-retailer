@@ -74,7 +74,6 @@ export default function StockRequest() {
   }
   return (
     <div>
-      <h1>Requests for Stock</h1>
       {requests?.stock_requests && Object.keys(requests?.stock_requests).length
         ? renderStockRequests()
         : null}

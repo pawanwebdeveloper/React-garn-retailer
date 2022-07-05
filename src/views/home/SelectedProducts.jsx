@@ -29,14 +29,24 @@ export default function SelectedProducts() {
       })
     }
   }
+
+  const Reset = () => {
+    dispatch({
+      type: 'set',
+      selectedProducts: {},
+    })
+  }
   return (
     <div>
       {Object.keys(selectedProducts)?.length ? (
         <CCard className="mb-4 box_items">
           <CCardBody>
             <CRow>
-              <CCol xs={12}>
+              <CCol xs={12} className="d-flex justify-content-between flex-wrap">
                 <p className="heading3 text_medium">Selected Items</p>
+                <div className="paragraph2 mb-2" onClick={() => Reset()}>
+                  Reset
+                </div>
               </CCol>
               <div className="check_ic d-flex">{renderSelectedProducts()}</div>
             </CRow>

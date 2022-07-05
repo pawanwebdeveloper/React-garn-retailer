@@ -47,7 +47,7 @@ export default function StockRequest() {
               </div>
             </div>
 
-            <Link className="col" to={`/orders/backorder/detail/?id=${p_id}`}></Link>
+            <Link className="col" to={`/backorder/detail/?id=${p_id}`}></Link>
 
             <div className="col-3 p-0">
               <Form.Select aria-label="Default  select example" className="qr_button p-2">
@@ -83,7 +83,6 @@ export default function StockRequest() {
   }
   return (
     <div>
-      <h1>Backorders </h1>
       {requests?.backorder && Object.keys(requests?.backorder).length ? renderBackorder() : null}
     </div>
   )

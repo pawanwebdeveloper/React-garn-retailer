@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 
 import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 
@@ -24,7 +24,7 @@ export default function Orders() {
   const selectedFeatures = useSelector((state) => state.selectedFeatures)
   const productPageNo = useSelector((state) => state.productPageNo)
 
-  useEffect(() => {
+  useCallback(() => {
     getProducts()
   }, [productPageNo])
 
@@ -32,7 +32,7 @@ export default function Orders() {
     let p = {
       page: productPageNo,
       items_per_page: 12,
-      group_by_seller_offers: 1,
+      group_by_sellers_offers: 1,
       // get_wholselers_products_stock: 1,
       // show_master_products_only: 1,
     }
@@ -72,7 +72,7 @@ export default function Orders() {
       })
   }
   return (
-    <div className="row m-0 mb-4">
+    <div className="row m-0 mb-4" style={{ width: '100%' }}>
       <div className="col-md-3 col-12">
         <ProductCategory />
         <SelectedWholesalers />

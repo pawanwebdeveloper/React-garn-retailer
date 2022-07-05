@@ -92,7 +92,6 @@ export default function OrderNew() {
   }
   return (
     <div>
-      <h1>Request for Stock</h1>
       <Popup show={show} size={'md'} onClose={onClose}>
         <div className="p-4">
           <div className="d-flex justify-content-center">

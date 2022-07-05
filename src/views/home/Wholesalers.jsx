@@ -12,7 +12,28 @@ export default function Wholesalers() {
   const dispatch = useDispatch()
   const AllWholesalers = useSelector((state) => state.Wholesalers)
   const selectedWholesalers = useSelector((state) => state.selectedWholesalers)
+
   const [pageNo, setPageNo] = useState(1)
+  const [totalPages, setTotalPages] = useState(null)
+  const itemsPerPage = 12
+
+  const renderPagination = () => {
+    let a = []
+    for (let i = pageNo - 2; i <= pageNo + 2; i++) {
+      if (i <= totalPages && i > 0) {
+        a.push(
+          <div
+            key={i}
+            onClick={() => setPageNo(i)}
+            className={AllWholesalers?.params?.page === i ? 'feature feature-active' : 'feature'}
+          >
+            {i}
+          </div>,
+        )
+      }
+    }
+    return a
+  }
 
   useEffect(() => {
     getWholesalers()
@@ -21,10 +42,9 @@ export default function Wholesalers() {
   const getWholesalers = () => {
     getData(Constants.END_POINT.GET_WHOLESALERS, {
       params: {
-        user_id: 73,
         is_master_vendor: 1,
         page: pageNo,
-        items_per_page: 12,
+        items_per_page: itemsPerPage,
         show_companies_force: 1,
         status: 'A',
       },
@@ -34,6 +54,8 @@ export default function Wholesalers() {
           type: 'set',
           Wholesalers: result,
         })
+        let len = result?.params?.total_items / result?.params?.items_per_page
+        setTotalPages(Math.ceil(len))
       })
       .catch((err) => {
         console.log(err)
@@ -97,7 +119,7 @@ export default function Wholesalers() {
                     </p>
                   </div>
                   <div className="col-md-8 col-12">
-                    <div className="d-flex flex-wrap ">
+                    {/* <div className="d-flex flex-wrap ">
                       <div className="feature paragraph3">PREV</div>
                       <div className="feature">&lt;</div>
                       <div
@@ -134,6 +156,28 @@ export default function Wholesalers() {
                       </div>
                       <div className="feature">&#62;</div>
                       <div className="feature paragraph3">NEXT</div>
+                    </div> */}
+                    <div className="d-flex flex-wrap ">
+                      <div className="feature paragraph3" onClick={() => setPageNo(1)}>
+                        PREV
+                      </div>
+                      <div
+                        onClick={() => {
+                          if (pageNo > 1) {
+                            setPageNo(pageNo - 1)
+                          }
+                        }}
+                        className="feature"
+                      >
+                        &lt;
+                      </div>
+                      {totalPages && renderPagination()}
+                      <div className="feature" onClick={() => setPageNo(pageNo + 1)}>
+                        &#62;
+                      </div>
+                      <div className="feature paragraph3" onClick={() => setPageNo(totalPages)}>
+                        NEXT
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -84,12 +84,22 @@ export default function FeatureFilters() {
       })
     }
   }
+
+  const Reset = () => {
+    dispatch({
+      type: 'set',
+      selectedFeatures: {},
+    })
+  }
   return (
     <CCard className="mb-4 box_items">
       <CCardBody>
         <CRow>
-          <CCol xs={12}>
+          <CCol xs={12} className="d-flex justify-content-between flex-wrap">
             <div className="paragraph1 text_bold mb-2">Size</div>
+            <div className="paragraph2 mb-2" onClick={() => Reset()}>
+              Reset
+            </div>
           </CCol>
           {features?.length && renderFeatures()}
         </CRow>

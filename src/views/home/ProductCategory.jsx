@@ -14,6 +14,7 @@ export default function ProductCategory() {
   const dispatch = useDispatch()
   const categories = useSelector((state) => state.categories)
   const selected = useSelector((state) => state.selectedCategories)
+
   const getCategories = () => {
     getData(Constants.END_POINT.GET_CATEGORIES, {
       params: {
@@ -34,7 +35,6 @@ export default function ProductCategory() {
         console.log(err)
       })
   }
-
   const selectcategory = (cat_id) => {
     if (selected?.[cat_id]) {
       delete selected?.[cat_id]
@@ -65,14 +65,40 @@ export default function ProductCategory() {
       </div>
     ))
   }
+  const Reset = () => {
+    dispatch({
+      type: 'set',
+      selectedCategories: {},
+    })
+  }
+
   return (
     <CCard className="mb-4 box_items">
       <CCardBody>
         <CRow>
-          <CCol xs={12}>
+          <CCol xs={12} className="d-flex justify-content-between flex-wrap">
             <div className="paragraph1 text_bold mb-2">Product Category</div>
+            <div className="paragraph2 mb-2" onClick={() => Reset()}>
+              Reset
+            </div>
           </CCol>
-          <div className="row p-1 m-0 mb-2">{categories && renderCategories()}</div>
+          <div className="row p-1 m-0 mb-2">
+            <div
+              onClick={() =>
+                dispatch({
+                  type: 'set',
+                  selectedCategories: {},
+                })
+              }
+              className="col-12 col-md-6 mb-4"
+            >
+              <div className={!Object.keys(selected)?.length ? 'boxItem active' : 'boxItem'}>
+                <p className=" text_medium text-center">All</p>
+                <div className="nuber_list">100</div>
+              </div>
+            </div>
+            {categories && renderCategories()}
+          </div>
         </CRow>
       </CCardBody>
     </CCard>

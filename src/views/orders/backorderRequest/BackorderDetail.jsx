@@ -125,7 +125,6 @@ export default function StockRequest() {
   }
   return (
     <div>
-      <h1>Backorders</h1>
       <CCard className="my-2">
         <CCardBody className="p-2">
           <div className="row text-uppercase paragraph3">
