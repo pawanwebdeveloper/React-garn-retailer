@@ -15,6 +15,35 @@ export default function Product() {
   const [product, setProduct] = useState({})
   const [selected, setSelected] = useState({})
 
+  const [available, setAvailable] = useState({})
+  const [last, setLast] = useState(null)
+
+  console.log(selected)
+
+  const CreateSets = (obj) => {
+    let av = {}
+    Object.values(obj).map((item) => {
+      let varients = Object.values(item)
+      if (av?.[varients[0]]) {
+        av = {
+          ...av,
+          [varients[0]]: { ...av[varients[0]], [varients[1]]: { [varients[1]]: varients[0] } },
+        }
+      } else {
+        av = { ...av, [varients[0]]: { [varients[1]]: { [varients[1]]: varients[0] } } }
+      }
+      if (av?.[varients[1]]) {
+        av = {
+          ...av,
+          [varients[1]]: { ...av[varients[1]], [varients[0]]: { [varients[0]]: varients[1] } },
+        }
+      } else {
+        av = { ...av, [varients[1]]: { [varients[0]]: { [varients[0]]: varients[1] } } }
+      }
+    })
+    setAvailable(av)
+  }
+
   useEffect(() => {
     if (productId) {
       getProduct()
@@ -22,13 +51,17 @@ export default function Product() {
   }, [productId])
 
   const getProduct = () => {
+    setAvailable({})
+    setSelected({})
+    setLast(null)
     getData(Constants.END_POINT.GET_WHOLESALERS_PRODUCTS + `/${productId}`, {
-      params: {
-        user_id: 73,
-      },
+      params: {},
     })
       .then((result) => {
         setProduct(result)
+        if (result.variations) {
+          CreateSets(result.variations)
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -53,14 +86,33 @@ export default function Product() {
   }
   const renderVarients = (varients, f_id) => {
     return Object.keys(varients).map((v_id, i) => (
-      <div
-        onClick={() => {
-          select(f_id, v_id, varients?.[v_id])
-        }}
-        key={i}
-        className={selected?.[f_id]?.[v_id] ? 'feature feature-active' : 'feature'}
-      >
-        {varients?.[v_id].variant}
+      <div key={i} className={selected?.[f_id]?.[v_id] ? 'feature feature-active' : 'feature '}>
+        {available?.[v_id] ? (
+          <div>
+            {available?.[last]?.[v_id] || !last ? (
+              <div
+                style={{ color: '#111' }}
+                onClick={() => {
+                  select(f_id, v_id, varients?.[v_id])
+                }}
+              >
+                {varients?.[v_id].variant}
+              </div>
+            ) : (
+              <div
+                onClick={() => {
+                  if (selected[f_id][v_id]) {
+                    select(f_id, v_id, varients?.[v_id])
+                  }
+                }}
+              >
+                {varients?.[v_id].variant}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div onClick={() => {}}>{varients?.[v_id].variant}</div>
+        )}
       </div>
     ))
   }
@@ -78,9 +130,20 @@ export default function Product() {
       </div>
     ))
   }
+
   const select = (f_id, v, item) => {
-    setSelected({ ...selected, [f_id]: { [v]: item } })
+    if (selected?.[f_id]?.[v]) {
+      delete selected[f_id]
+      setSelected({ ...selected })
+      if (v === last) {
+        setLast(null)
+      }
+    } else {
+      setSelected({ ...selected, [f_id]: { [v]: item } })
+      setLast(v)
+    }
   }
+
   const addProductInCart = () => {
     if (Object.keys(selected)?.length && qty > 0) {
       let productArray = []

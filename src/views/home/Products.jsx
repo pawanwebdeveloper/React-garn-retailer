@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getData } from 'src/services/http.service'
@@ -32,6 +32,7 @@ export default function Products() {
   const allProducts = useSelector((state) => state.allProducts)
   const productId = useSelector((state) => state.productId)
   const pageNo = useSelector((state) => state.productPageNo)
+  console.log(pageNo)
 
   useEffect(() => {
     let len = allProducts?.params?.total_items / allProducts?.params?.items_per_page
@@ -43,8 +44,6 @@ export default function Products() {
       params: {
         page: pageNo,
         items_per_page: itemsPerPage,
-        // company_ids: 1,
-        master_product_ids: 9213,
       },
     })
       .then((result) => {
